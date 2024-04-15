@@ -1,0 +1,22 @@
+[package]
+name = "libsimple"
+version = "0.1.0"
+authors = ["xuxiaocheng <2762267080@qq.com>"]
+edition = "2021"
+description = "Rust bindings to simple, a SQLite3 fts5 tokenizer which supports Chinese and PinYin."
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/xuxiaocheng0201/libsimple/"
+documentation = "https://docs.rs/libsimple/"
+categories = ["database"]
+keywords = ["sqlite", "extension", "sqlite-extension", "fts5", "tokenizer"]
+
+[dependencies]
+rusqlite = { version = "^0.31", features = ["load_extension"] }
+
+[build-dependencies]
+anyhow = "^1.0"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

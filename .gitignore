@@ -1,0 +1,14 @@
+/*
+
+### Cargo ###
+!/.gitignore
+!/Cargo.lock
+!/Cargo.toml
+
+### Project ###
+!/src
+!/simple-0.4.0
+!/build.rs
+!/README.md
+!/CHANGELOG.md
+!/LICENSE
