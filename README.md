@@ -21,6 +21,13 @@ Add this to your `Cargo.toml`:
 libsimple = "~0.1"
 ```
 
+
+# Note
+
+This crate will clone the [cppjieba](https://github.com/yanyiwu/cppjieba.git/) from github when you build,
+so make sure you have the network access.
+
+
 # License
 
 Licensed under MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)

@@ -2,14 +2,18 @@
 
 ### Cargo ###
 !/.gitignore
-!/.gitmodules
 !/Cargo.lock
 !/Cargo.toml
 
 ### Project ###
 !/src
-!/simple
 !/build.rs
+
+## modules ##
+!/.gitmodules
+!/simple
+
+## docs ##
 !/README.md
 !/CHANGELOG.md
 !/LICENSE
