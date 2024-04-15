@@ -50,7 +50,10 @@ fn main() -> Result<()> {
 
 # Note
 
-This crate will clone the [cppjieba](https://github.com/yanyiwu/cppjieba.git/) from github when you build,
+To build this crate,
+please make sure you have installed `make` and `cmake`.
+
+This crate will clone the [cppjieba](https://github.com/yanyiwu/cppjieba.git/) from GitHub when you build,
 so make sure you have the network access.
 
 
