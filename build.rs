@@ -1,5 +1,5 @@
 use std::env::var;
-use std::fs::{copy, create_dir, create_dir_all, read_dir};
+use std::fs::{copy, create_dir, create_dir_all, OpenOptions, read_dir};
 use std::path::Path;
 use std::process::Command;
 
@@ -31,7 +31,13 @@ fn execute(commond: &mut Command) -> Result<()> {
 fn main() -> Result<()> {
     let out_dir = var("OUT_DIR")?;
 
-    copy_dir("simple", &Path::new(&out_dir).join("simple"))?;
+    let finish_flag = Path::new(&out_dir).join("finish");
+    if finish_flag.is_file() {
+        return Ok(());
+    }
+
+    let simple_dir = Path::new(&out_dir).join("simple");
+    copy_dir("simple", &simple_dir)?;
 
     let build_dir = Path::new(&out_dir).join("build");
     if !build_dir.is_dir() {
@@ -48,6 +54,8 @@ fn main() -> Result<()> {
     execute(Command::new("make").arg("install")
         .current_dir(&build_dir)
     )?;
+
+    OpenOptions::new().write(true).create(true).open(finish_flag)?;
 
     Ok(())
 }
