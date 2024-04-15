@@ -22,6 +22,32 @@ libsimple = "~0.1"
 ```
 
 
+# Example
+
+```rust
+use anyhow::Result;
+use tempfile::tempdir;
+
+fn main() -> Result<()> {
+    let dir = tempdir()?;
+    libsimple::initialize(&dir)?;
+    let conn = rusqlite::Connection::open_in_memory()?;
+    libsimple::load(&conn)?;
+    conn.execute_batch("
+        CREATE TABLE singer (id INTEGER, name TEXT);
+        CREATE VIRTUAL TABLE d USING fts5(id, name, tokenize = 'simple');
+        CREATE TRIGGER insert_trigger AFTER INSERT ON singer BEGIN
+            INSERT INTO d(id, name) VALUES (new.id, new.name);
+        END;
+        INSERT INTO singer (id, name) VALUES (1, '周杰伦');
+    ")?;
+    assert_eq!(conn.query_row("SELECT id FROM d WHERE name MATCH simple_query('zhoujiel')",
+                              [], |row| row.get::<_, i64>(0))?, 1);
+    Ok(())
+}
+```
+
+
 # Note
 
 This crate will clone the [cppjieba](https://github.com/yanyiwu/cppjieba.git/) from github when you build,

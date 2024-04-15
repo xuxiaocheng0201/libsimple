@@ -15,7 +15,12 @@ keywords = ["sqlite", "extension", "sqlite-extension", "fts5", "tokenizer"]
 anyhow = "^1.0"
 
 [dependencies]
+thiserror = "~1.0"
 rusqlite = { version = "^0.31", features = ["load_extension"] }
+
+[dev-dependencies]
+anyhow = "^1.0"
+rusqlite = { version = "^0.31", features = ["bundled-sqlcipher"] }
 tempfile = "^3.10"
 
 [package.metadata.docs.rs]
