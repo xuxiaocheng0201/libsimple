@@ -51,15 +51,6 @@ fn main() -> Result<()> {
 ```
 
 
-# Note
-
-To build this crate,
-please make sure you have installed `make` and `cmake`.
-
-This crate will clone the [cppjieba](https://github.com/yanyiwu/cppjieba.git/) from GitHub when you build,
-so make sure you have the network access.
-
-
 # License
 
-Licensed under MIT license ([LICENSE-MIT](LICENSE) or http://opensource.org/licenses/MIT)
+Licensed under MIT license ([LICENSE](LICENSE) or <http://opensource.org/licenses/MIT>)
