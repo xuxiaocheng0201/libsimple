@@ -11,11 +11,14 @@ documentation = "https://docs.rs/libsimple/"
 categories = ["database"]
 keywords = ["sqlite", "extension", "sqlite-extension", "fts5", "tokenizer"]
 
+[features]
+default = ["jieba"]
+jieba = []
+
 [build-dependencies]
-anyhow = "^1.0"
+cc = { version = "^1.0", features = ["parallel"] }
 
 [dependencies]
-thiserror = "~1.0"
 rusqlite = { version = "^0.31", features = ["load_extension"] }
 
 [dev-dependencies]
