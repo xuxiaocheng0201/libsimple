@@ -12,6 +12,7 @@
 ## modules ##
 !/.gitmodules
 !/simple
+!/cppjieba
 
 ## docs ##
 !/README.md
