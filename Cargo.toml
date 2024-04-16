@@ -1,6 +1,6 @@
 [package]
 name = "libsimple"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["xuxiaocheng <2762267080@qq.com>"]
 edition = "2021"
 description = "Rust bindings to simple, a SQLite3 fts5 tokenizer which supports Chinese and PinYin."
@@ -10,6 +10,19 @@ repository = "https://github.com/xuxiaocheng0201/libsimple/"
 documentation = "https://docs.rs/libsimple/"
 categories = ["database"]
 keywords = ["sqlite", "extension", "sqlite-extension", "fts5", "tokenizer"]
+
+exclude = [
+    "simple/*",
+    "cppjieba/*",
+    "!simple/src",
+    "!simple/contrib",
+    "!cppjieba/include",
+    "!cppjieba/dict",
+    " cppjieba/dict/pos_dict",
+    "!cppjieba/deps/limonp/include",
+    "!**/LICENSE",
+    "!**/README.md",
+]
 
 [features]
 default = ["jieba"]

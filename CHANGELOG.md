@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2024-4-16
+
+### Added
+
+* Bundled 构建，支持离线
+* 添加 jieba feature，可选编译
+
+### Changed
+
+* 重构 API
+
+## [0.1.0] - 2024-4-15
+
 ### Added
 
 * 支持 simple v0.4.0
