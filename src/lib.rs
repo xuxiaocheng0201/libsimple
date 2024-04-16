@@ -81,6 +81,7 @@ mod tests {
         let conn = rusqlite::Connection::open_in_memory()?;
         crate::set_dict(&conn, &dir)?;
         conn.execute_batch("
+            PRAGMA key = '123456';
             CREATE TABLE singer (id INTEGER, name TEXT);
             CREATE VIRTUAL TABLE d USING fts5(id, name, tokenize = 'simple');
             CREATE TRIGGER dtrigger AFTER INSERT ON singer BEGIN
