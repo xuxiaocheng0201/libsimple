@@ -1,95 +1,85 @@
+#![doc = include_str!("../README.md")]
+#![cfg_attr(docsrs, feature(doc_cfg))]
+#![warn(missing_docs)]
+
+use std::ffi::CStr;
 use std::fs::create_dir_all;
 use std::fs::OpenOptions;
 use std::io::Write;
-use std::path::{Path, PathBuf};
-use std::sync::RwLock;
+use std::path::Path;
 
 use rusqlite::{Connection, params};
-use thiserror::Error;
+use rusqlite::ffi::{sqlite3_auto_extension, sqlite3_errstr, SQLITE_OK};
 
-#[cfg(target_os = "windows")]
-macro_rules! simple_dylib {
-    () => {
-        "libsimple.dll"
-    };
-}
-#[cfg(not(target_os = "windows"))]
-macro_rules! simple_dylib {
-    () => {
-        "libsimple.so"
-    };
-}
+use crate::ffi::sqlite3_simple_init;
 
-#[doc(hidden)]
-#[inline]
-pub fn get_dylib() -> &'static [u8] {
-    include_bytes!(concat!(env!("OUT_DIR"), "/build/release/bin/", simple_dylib!()))
-}
+pub mod ffi;
 
-macro_rules! embedded_file {
-    ($target: ident, $source: expr) => {
-        let file = include_bytes!(concat!(env!("OUT_DIR"), "/build/release/bin/", $source));
-        let target = $target.join($source);
-        if let Some(parent) = target.parent() {
-            create_dir_all(parent)?;
-        }
-        OpenOptions::new().write(true).create(true).truncate(true)
-            .open(&target)?.write_all(file)?;
-    };
+/// Enable sqlite3_simple_init() as an auto extension.
+pub fn enable_auto_extension() -> rusqlite::Result<()> {
+    let res = unsafe { sqlite3_auto_extension(Some(sqlite3_simple_init)) };
+    // rusqlite::error::check(res)
+    if res == SQLITE_OK {
+        return Ok(());
+    }
+    let err = unsafe { sqlite3_errstr(res) };
+    if err.is_null() {
+        return Err(rusqlite::Error::SqliteFailure(rusqlite::ffi::Error::new(res), None));
+    }
+    let msg = unsafe { CStr::from_ptr(err) }.to_str()?;
+    Err(rusqlite::Error::SqliteFailure(rusqlite::ffi::Error::new(res), Some(msg.to_string())))
 }
 
-static DICT: RwLock<Option<PathBuf>> = RwLock::new(None);
-
-/// Release dylib and dict files into directory.
-pub fn initialize(directory: impl AsRef<Path>) -> std::io::Result<()> {
+/// Release dict files into directory.
+/// Only need to call this method once.
+///
+/// Then you may call [`set_dict`] for each connection.
+#[cfg(feature = "jieba")]
+#[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
+pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
     let directory = directory.as_ref().to_path_buf();
-    if !directory.exists() { create_dir_all(&directory)?; }
+    if !directory.is_dir() { create_dir_all(&directory)?; }
 
-    embedded_file!(directory, simple_dylib!());
-    embedded_file!(directory, "dict/jieba.dict.utf8");
-    embedded_file!(directory, "dict/user.dict.utf8");
-    embedded_file!(directory, "dict/hmm_model.utf8");
-    embedded_file!(directory, "dict/idf.utf8");
-    embedded_file!(directory, "dict/stop_words.utf8");
+    macro_rules! embedded_file {
+        ($target: ident, $source: expr) => {
+            let file = include_bytes!(concat!("../cppjieba/dict/", $source));
+            let target = $target.join($source);
+            OpenOptions::new().write(true).create(true).truncate(true)
+                .open(&target)?.write_all(file)?;
+        };
+    }
+    embedded_file!(directory, "jieba.dict.utf8");
+    embedded_file!(directory, "user.dict.utf8");
+    embedded_file!(directory, "hmm_model.utf8");
+    embedded_file!(directory, "idf.utf8");
+    embedded_file!(directory, "stop_words.utf8");
 
-    DICT.write().unwrap().replace(directory);
     Ok(())
 }
 
-#[derive(Debug, Error)]
-#[error(transparent)]
-pub enum Error {
-    IoError(#[from] std::io::Error),
-    SqliteError(#[from] rusqlite::Error),
-}
-
-/// Load the `simple` extension
-/// # Panic
-/// If [initialize] is not called.
-/// Or the directory is removed after the call.
-pub fn load(connection: &Connection) -> Result<(), Error> {
-    let guard = DICT.read().unwrap();
-    let path = guard.as_ref().expect("libsimple is not initialized");
-    unsafe { connection.load_extension(path.join("libsimple"), None) }?;
-    let dict = path.join("dict");
-    let dict = dict.to_str().ok_or_else(|| std::io::Error::new(std::io::ErrorKind::InvalidInput, "invalid path"))?;
-    connection.query_row("SELECT jieba_dict(?)", params![dict], |_| Ok(()))?;
-    Ok(())
+/// Only need to call once for each connection,
+/// but must call this function before using sql `jieba_query`.
+///
+/// You should call [`release_dict`] first.
+#[cfg(feature = "jieba")]
+#[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
+pub fn set_dict(connection: &Connection, directory: impl AsRef<Path>) -> rusqlite::Result<()> {
+    let directory = directory.as_ref();
+    let directory = directory.to_str()
+        .ok_or_else(|| rusqlite::Error::InvalidPath(directory.to_path_buf()))?;
+    connection.query_row("SELECT jieba_dict(?)", params![directory], |_| Ok(()))
 }
 
 #[cfg(test)]
 mod tests {
-    use anyhow::Result;
-    use tempfile::tempdir;
-
-    //noinspection SpellCheckingInspection
     #[test]
-    fn test() -> Result<()> {
-        let dir = tempdir()?;
-        crate::initialize(&dir)?;
+    fn test() -> anyhow::Result<()> {
+        crate::enable_auto_extension()?;
+        let dir = tempfile::tempdir()?;
+        crate::release_dict(&dir)?;
 
         let conn = rusqlite::Connection::open_in_memory()?;
-        crate::load(&conn)?;
+        crate::set_dict(&conn, &dir)?;
         conn.execute_batch("
             CREATE TABLE singer (id INTEGER, name TEXT);
             CREATE VIRTUAL TABLE d USING fts5(id, name, tokenize = 'simple');

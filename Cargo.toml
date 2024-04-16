@@ -19,7 +19,7 @@ jieba = []
 cc = { version = "^1.0", features = ["parallel"] }
 
 [dependencies]
-rusqlite = { version = "^0.31", features = ["load_extension"] }
+rusqlite = "^0.31"
 
 [dev-dependencies]
 anyhow = "^1.0"
