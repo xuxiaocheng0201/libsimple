@@ -2,14 +2,13 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(missing_docs)]
 
-use std::ffi::CStr;
 use std::fs::create_dir_all;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
 
 use rusqlite::{Connection, params};
-use rusqlite::ffi::{sqlite3_auto_extension, sqlite3_errstr, SQLITE_OK};
+use rusqlite::ffi::{sqlite3_auto_extension, sqlite3_cancel_auto_extension};
 
 use crate::ffi::sqlite3_simple_init;
 
@@ -18,16 +17,13 @@ pub mod ffi;
 /// Enable sqlite3_simple_init() as an auto extension.
 pub fn enable_auto_extension() -> rusqlite::Result<()> {
     let res = unsafe { sqlite3_auto_extension(Some(sqlite3_simple_init)) };
-    // rusqlite::error::check(res)
-    if res == SQLITE_OK {
-        return Ok(());
-    }
-    let err = unsafe { sqlite3_errstr(res) };
-    if err.is_null() {
-        return Err(rusqlite::Error::SqliteFailure(rusqlite::ffi::Error::new(res), None));
-    }
-    let msg = unsafe { CStr::from_ptr(err) }.to_str()?;
-    Err(rusqlite::Error::SqliteFailure(rusqlite::ffi::Error::new(res), Some(msg.to_string())))
+    ffi::check_err(res)
+}
+
+/// Disable sqlite3_simple_init() as an auto extension.
+pub fn disable_auto_extension() -> rusqlite::Result<()> {
+    let res = unsafe { sqlite3_cancel_auto_extension(Some(sqlite3_simple_init)) };
+    ffi::check_err(res)
 }
 
 /// Release dict files into directory.
