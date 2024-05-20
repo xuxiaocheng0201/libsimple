@@ -18,10 +18,11 @@ exclude = [
     "!simple/contrib",
     "!cppjieba/include",
     "!cppjieba/dict",
-    " cppjieba/dict/pos_dict",
+     "cppjieba/dict/pos_dict",
     "!cppjieba/deps/limonp/include",
     "!**/LICENSE",
-    "!**/README.md",
+     "**/*.cmake",
+     "**/CMakeLists.txt",
 ]
 
 [features]
