@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2024-5-20
+
+### Added
+
+* 添加 disable_auto_extension 方法
+* 添加更多 ffi 接口
+
 ## [0.2.2] - 2024-5-20
 
 ### Added

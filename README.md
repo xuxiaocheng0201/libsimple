@@ -18,7 +18,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-libsimple = "~0.2"
+libsimple = "~0.3"
 ```
 
 
