@@ -2,12 +2,9 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(missing_docs)]
 
-use std::fs::create_dir_all;
-use std::fs::OpenOptions;
-use std::io::Write;
+#[cfg(feature = "jieba")]
 use std::path::Path;
 
-use rusqlite::{Connection, params};
 use rusqlite::ffi::{sqlite3_auto_extension, sqlite3_cancel_auto_extension};
 
 use crate::ffi::sqlite3_simple_init;
@@ -33,6 +30,10 @@ pub fn disable_auto_extension() -> rusqlite::Result<()> {
 #[cfg(feature = "jieba")]
 #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
 pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
+    use std::fs::create_dir_all;
+    use std::fs::OpenOptions;
+    use std::io::Write;
+
     let directory = directory.as_ref().to_path_buf();
     if !directory.is_dir() { create_dir_all(&directory)?; }
 
@@ -59,11 +60,11 @@ pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
 /// You should call [`release_dict`] first.
 #[cfg(feature = "jieba")]
 #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
-pub fn set_dict(connection: &Connection, directory: impl AsRef<Path>) -> rusqlite::Result<()> {
+pub fn set_dict(connection: &rusqlite::Connection, directory: impl AsRef<Path>) -> rusqlite::Result<()> {
     let directory = directory.as_ref();
     let directory = directory.to_str()
         .ok_or_else(|| rusqlite::Error::InvalidPath(directory.to_path_buf()))?;
-    connection.query_row("SELECT jieba_dict(?)", params![directory], |_| Ok(()))
+    connection.query_row("SELECT jieba_dict(?)", rusqlite::params![directory], |_| Ok(()))
 }
 
 #[cfg(test)]
