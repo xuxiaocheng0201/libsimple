@@ -42,3 +42,7 @@ tempfile = "^3.10"
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
+
+[[example]]
+name = "hello"
+path = "examples/hello/src/main.rs"
