@@ -45,4 +45,3 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [[example]]
 name = "hello"
-path = "examples/hello/src/main.rs"

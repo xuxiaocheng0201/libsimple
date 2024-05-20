@@ -8,6 +8,7 @@
 ### Project ###
 !/src
 !/build.rs
+!/examples
 
 ## modules ##
 !/.gitmodules
@@ -18,4 +19,3 @@
 !/README.md
 !/CHANGELOG.md
 !/LICENSE
-!/examples
