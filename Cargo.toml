@@ -30,14 +30,14 @@ default = ["jieba"]
 jieba = []
 
 [build-dependencies]
-cc = { version = "^1.0", features = ["parallel"] }
+cc = { version = "^1.1", features = ["parallel"] }
 
 [dependencies]
-rusqlite = "^0.31"
+rusqlite = "~0.32"
 
 [dev-dependencies]
 anyhow = "^1.0"
-rusqlite = { version = "^0.31", features = ["bundled-sqlcipher"] }
+rusqlite = { version = "~0.32", features = ["bundled-sqlcipher"] }
 tempfile = "^3.10"
 
 [package.metadata.docs.rs]
