@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2024-7-25
+
+### Changed
+
+* 更新依赖
+* 修改 sqlite3_simple_init 方法签名
+
 ## [0.3.0] - 2024-5-20
 
 ### Added
