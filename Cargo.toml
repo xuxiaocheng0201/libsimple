@@ -44,7 +44,7 @@ rusqlite = "~0.32"
 [dev-dependencies]
 anyhow = "^1.0"
 rusqlite = { version = "~0.32", features = ["bundled-sqlcipher"] }
-tempfile = "^3.10"
+tempfile = "^3.12"
 
 [package.metadata.docs.rs]
 all-features = true
