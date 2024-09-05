@@ -86,8 +86,10 @@ mod tests {
             END;
             INSERT INTO singer (id, name) VALUES (1, '中华人民共和国国歌');
         ")?;
-        assert_eq!(conn.query_row("SELECT id FROM d WHERE name MATCH jieba_query('中华国歌')",
-                                  [], |row| row.get::<_, i64>(0))?, 1);
+        assert_eq!(1, conn.query_row(
+           "SELECT id FROM d WHERE name MATCH jieba_query('中华国歌')",
+           [], |row| row.get::<_, i64>(0)
+        )?);
         Ok(())
     }
 }
