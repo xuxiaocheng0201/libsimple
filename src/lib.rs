@@ -31,12 +31,8 @@ pub fn disable_auto_extension() -> rusqlite::Result<()> {
 #[cfg(feature = "jieba")]
 #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
 pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
-    use std::fs::create_dir_all;
-    use std::fs::OpenOptions;
-    use std::io::Write;
-
     let directory = directory.as_ref().to_path_buf();
-    if !directory.is_dir() { create_dir_all(&directory)?; }
+    if !directory.is_dir() { std::fs::create_dir_all(&directory)?; }
 
     macro_rules! embedded_file {
         ($target: ident, $source: expr) => {

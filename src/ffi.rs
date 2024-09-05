@@ -1,22 +1,25 @@
 //! Raw FFI bindings to simple.
-#![allow(missing_docs)]
 
 use std::ffi::{c_char, c_int, CStr};
 
 use rusqlite::{Error, ffi, Result};
 
 extern "C" {
+    /// The entrypoint for the [simple](https://github.com/wangfenjin/simple) extension.
     pub fn sqlite3_simple_init(db: *mut ffi::sqlite3, pz_err_msg: *mut *mut c_char, p_api: *const ffi::sqlite3_api_routines) -> c_int;
 
 
+    /// The sqlite function entrypoint for `simple_query` function.
     pub fn simple_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 
     #[cfg(feature = "jieba")]
     #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
+    /// The sqlite function entrypoint for `jieba_dict` function.
     pub fn jieba_dict(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 
     #[cfg(feature = "jieba")]
     #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
+    /// The sqlite function entrypoint for `jieba_query` function.
     pub fn jieba_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 }
 

@@ -7,18 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+* 优化 `release_dict` 行为，不始终覆盖文件
+
 ## [0.3.1] - 2024-7-25
 
 ### Changed
 
 * 更新依赖
-* 修改 sqlite3_simple_init 方法签名
+* 修改 `sqlite3_simple_init` 方法签名
 
 ## [0.3.0] - 2024-5-20
 
 ### Added
 
-* 添加 disable_auto_extension 方法
+* 添加 `disable_auto_extension` 方法
 * 添加更多 ffi 接口
 
 ## [0.2.2] - 2024-5-20
@@ -32,14 +36,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * 优化文档
-* 测试 sqlcipher
+* 测试 `sqlcipher`
 
 ## [0.2.0] - 2024-4-16
 
 ### Added
 
 * Bundled 构建，支持离线
-* 添加 jieba feature，可选编译
+* 添加 `jieba` feature，可选编译
 
 ### Changed
 
@@ -49,4 +53,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* 支持 simple v0.4.0
+* 支持 `simple v0.4.0`
