@@ -56,3 +56,18 @@ fn main() -> Result<()> {
 # License
 
 Licensed under MIT license ([LICENSE](LICENSE) or <http://opensource.org/licenses/MIT>)
+
+
+# Version map
+
+This is the compatible version map between `libsimple` and `rusqlite`:
+
+| `libsimple` version | `rusqlite` version |
+|---------------------|--------------------|
+| =0.3.2              | ~0.32              |
+| =0.3.1              | ~0.32              |
+| =0.3.0              | ~0.31              |
+| =0.2.2              | ~0.31              |
+| =0.2.1              | ~0.31              |
+| =0.2.0              | ~0.31              |
+| =0.1.0              | ~0.31              |

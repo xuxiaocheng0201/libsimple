@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2024-9-5
+
 ### Fixed
 
 * 优化 `release_dict` 行为，不始终覆盖文件
