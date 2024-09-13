@@ -115,7 +115,7 @@ checksum = "d8adc4bb1803a324070e64a98ae98f38934d91957a99cfb3a43dcbc01bc56439"
 
 [[package]]
 name = "libsimple"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "anyhow",
  "better_embedded",

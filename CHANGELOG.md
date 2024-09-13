@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2024-9-13
+
+### Fixed
+
+* 修复 MSVC 编译 D8021 错误
+
 ## [0.3.2] - 2024-9-5
 
 ### Fixed
