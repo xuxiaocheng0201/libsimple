@@ -19,10 +19,10 @@ fn main() {
         cfg.include("cppjieba/deps/limonp/include");
     }
 
-    cfg.flag("-Wno-comment");
-    cfg.flag("-Wno-unused-parameter");
-    cfg.flag("-Wno-deprecated-declarations");
-    cfg.flag("-Wno-unused-but-set-variable");
+    cfg.flag_if_supported("-Wno-comment");
+    cfg.flag_if_supported("-Wno-unused-parameter");
+    cfg.flag_if_supported("-Wno-deprecated-declarations");
+    cfg.flag_if_supported("-Wno-unused-but-set-variable");
 
     cfg.cpp(true);
     cfg.std("c++14");
