@@ -1,6 +1,6 @@
 [package]
 name = "libsimple"
-version = "0.3.3"
+version = "0.3.4"
 authors = ["xuxiaocheng <2762267080@qq.com>"]
 edition = "2021"
 description = "Rust bindings to simple, a SQLite3 fts5 tokenizer which supports Chinese and PinYin."
@@ -24,7 +24,7 @@ include = [
     "!/cppjieba/dict/pos_dict",
     "/cppjieba/deps/limonp/include",
     "/simple/src",
-    "/simple/contrib",
+    "/simple/contrib/sqlite3",
 
     "**/LICENSE",
     "!**/*.cmake",
@@ -40,7 +40,7 @@ cc = { version = "^1.1", features = ["parallel"] }
 
 [dependencies]
 rusqlite = "~0.32"
-better_embedded = "~0.3"
+better_embedded = "~0.4"
 
 [dev-dependencies]
 anyhow = "^1.0"

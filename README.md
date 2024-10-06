@@ -35,6 +35,7 @@ fn main() -> Result<()> {
     
     let conn = rusqlite::Connection::open_in_memory()?;
     libsimple::set_dict(&conn, &dir)?;
+    
     conn.execute_batch("
         CREATE VIRTUAL TABLE d USING fts5(id, text, tokenize = 'simple');
         INSERT INTO d (id, text) VALUES (1, '中华人民共和国国歌');
@@ -64,6 +65,7 @@ This is the compatible version map between `libsimple` and `rusqlite`:
 
 | `libsimple` version | `rusqlite` version |
 |---------------------|--------------------|
+| =0.3.4              | ~0.32              |
 | =0.3.3              | ~0.32              |
 | =0.3.2              | ~0.32              |
 | =0.3.1              | ~0.32              |

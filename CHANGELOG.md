@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] - 2024-10-7
+
+### Added
+
+* 添加 highlight 相关 ffi 入口点
+
 ## [0.3.3] - 2024-9-13
 
 ### Fixed

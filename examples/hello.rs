@@ -9,6 +9,7 @@ fn main() -> Result<()> {
     
     let conn = Connection::open_in_memory()?;
     libsimple::set_dict(&conn, &dir)?;
+
     conn.execute_batch("
         CREATE VIRTUAL TABLE d USING fts5(id, text, tokenize = 'simple');
         INSERT INTO d (id, text) VALUES (1, '中华人民共和国国歌');

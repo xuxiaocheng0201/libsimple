@@ -22,10 +22,11 @@ checksum = "86fdf8605db99b54d3cd748a44c6d04df638eb5dafb219b135d0149bd0db01f6"
 
 [[package]]
 name = "better_embedded"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3d06111f2b2435e3d6621d8b8d7d6117666ab3bd8270dfdb7a70ae18c145604"
+checksum = "e28fd9c8a7f31a913128bee48a37e7abc57c37e71d27e8fb41f849cef36f143f"
 dependencies = [
+ "log",
  "md-5",
 ]
 
@@ -154,7 +155,7 @@ checksum = "561d97a539a36e26a9a5fad1ea11a3039a67714694aaa379433e580854bc3dc5"
 
 [[package]]
 name = "libsimple"
-version = "0.3.3"
+version = "0.3.4"
 dependencies = [
  "anyhow",
  "better_embedded",
@@ -179,6 +180,12 @@ name = "linux-raw-sys"
 version = "0.4.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "78b3ae25bc7c8c38cec158d1f2757ee79e9b3740fbc7ccf0e59e4b08d793fa89"
+
+[[package]]
+name = "log"
+version = "0.4.22"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
 
 [[package]]
 name = "md-5"
