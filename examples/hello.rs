@@ -14,11 +14,13 @@ fn main() -> Result<()> {
         INSERT INTO d (id, text) VALUES (1, '中华人民共和国国歌');
         INSERT INTO d (id, text) VALUES (2, '周杰伦');
     ")?;
-    assert_eq!(1, conn
-        .query_row("SELECT id FROM d WHERE text MATCH jieba_query('中华国歌')", [], |row| row.get::<_, i64>(0))?
+    assert_eq!(1, conn.query_row(
+        "SELECT id FROM d WHERE text MATCH jieba_query('中华国歌')",
+        [], |row| row.get::<_, i64>(0))?
     );
-    assert_eq!(2, conn
-        .query_row("SELECT id FROM d WHERE text MATCH simple_query('zhoujiel')", [], |row| row.get::<_, i64>(0))?
+    assert_eq!(2, conn.query_row(
+        "SELECT id FROM d WHERE text MATCH simple_query('zhoujiel')",
+        [], |row| row.get::<_, i64>(0))?
     );
     Ok(())
 }

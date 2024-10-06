@@ -5,7 +5,7 @@
 #[cfg(feature = "jieba")]
 use std::path::Path;
 
-use better_embedded::CheckStrategy;
+use better_embedded::strategies::DefaultCheckStrategy;
 use rusqlite::ffi::{sqlite3_auto_extension, sqlite3_cancel_auto_extension};
 
 use crate::ffi::sqlite3_simple_init;
@@ -38,7 +38,7 @@ pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
         ($target: ident, $source: expr) => {
             let file = include_bytes!(concat!("../cppjieba/dict/", $source));
             let target = $target.join($source);
-            better_embedded::release_file_with_check(file, &target, CheckStrategy::config())?;
+            better_embedded::release_file_with_check(file, &target, DefaultCheckStrategy::config())?;
         };
     }
     embedded_file!(directory, "jieba.dict.utf8");

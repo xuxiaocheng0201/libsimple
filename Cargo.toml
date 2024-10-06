@@ -40,12 +40,12 @@ cc = { version = "^1.1", features = ["parallel"] }
 
 [dependencies]
 rusqlite = "~0.32"
-better_embedded = "~0.1"
+better_embedded = "~0.3"
 
 [dev-dependencies]
 anyhow = "^1.0"
 rusqlite = { version = "~0.32", features = ["bundled-sqlcipher"] }
-tempfile = "^3.12"
+tempfile = "^3.13"
 
 [package.metadata.docs.rs]
 all-features = true
