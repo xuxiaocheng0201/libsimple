@@ -21,6 +21,16 @@ extern "C" {
     #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
     /// The sqlite function entrypoint for `jieba_query` function.
     pub fn jieba_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
+
+
+    /// The sqlite fts5 function entrypoint for `simple_highlight` function.
+    pub fn simple_highlight(api: *const ffi::Fts5ExtensionApi, fts: *mut ffi::Fts5Context, ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
+
+    /// The sqlite fts5 function entrypoint for `simple_highlight_pos` function.
+    pub fn simple_highlight_pos(api: *const ffi::Fts5ExtensionApi, fts: *mut ffi::Fts5Context, ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
+
+    /// The sqlite fts5 function entrypoint for `simple_snippet` function.
+    pub fn simple_snippet(api: *const ffi::Fts5ExtensionApi, fts: *mut ffi::Fts5Context, ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 }
 
 /// This is a re-exported and enhanced version of [`rusqlite::error::check(res)`](rusqlite::error::check)
