@@ -9,6 +9,7 @@
 !/src
 !/build.rs
 !/examples
+!/cmrc
 
 ## modules ##
 !/.gitmodules
