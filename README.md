@@ -75,3 +75,19 @@ This is the compatible version map between `libsimple` and `rusqlite`:
 | =0.2.1              | ~0.31              |
 | =0.2.0              | ~0.31              |
 | =0.1.0              | ~0.31              |
+
+
+# Generate CMRC
+
+This is only required when the `pinyin.txt` updated.
+Normal user can ignore this.
+
+```bash
+cd simple && mkdir build && cd build
+cmake .. -DBUILD_SQLITE3=off -DSIMPLE_WITH_JIEBA=off -DBUILD_TEST_EXAMPLE=off
+make
+cp -f _cmrc/include/cmrc/cmrc.hpp ../../cmrc/include/cmrc/cmrc.hpp
+cp -f __cmrc_PINYIN_TEXT/lib.cpp ../../cmrc/pinyin.txt/lib.cpp
+cp -f __cmrc_PINYIN_TEXT/intermediate/contrib/pinyin.txt.cpp ../../cmrc/pinyin.txt/pinyin.txt.cpp
+cd .. && rm -r build && cd ..
+```
