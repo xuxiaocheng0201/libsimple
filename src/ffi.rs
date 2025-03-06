@@ -4,7 +4,7 @@ use std::ffi::{c_char, c_int, CStr};
 
 use rusqlite::{Error, ffi, Result};
 
-extern "C" {
+unsafe extern "C" {
     /// The entrypoint for the [simple](https://github.com/wangfenjin/simple) extension.
     pub fn sqlite3_simple_init(db: *mut ffi::sqlite3, pz_err_msg: *mut *mut c_char, p_api: *const ffi::sqlite3_api_routines) -> c_int;
 
