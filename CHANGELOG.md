@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-3-6
+
+### Changed
+
+* 使用 edition 2024
+* MSRV 为 1.85.0
+
 ## [0.3.7] - 2025-3-6
 
 ### Changed

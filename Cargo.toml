@@ -1,8 +1,9 @@
 [package]
 name = "libsimple"
-version = "0.3.7"
+version = "0.4.0"
 authors = ["xuxiaocheng <2762267080@qq.com>"]
-edition = "2021"
+edition = "2024"
+rust-version = "1.85.0"
 description = "Rust bindings to simple, a SQLite3 fts5 tokenizer which supports Chinese and PinYin."
 readme = "README.md"
 license = "MIT"
