@@ -18,19 +18,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* 更新 rusqlite 到 ~0.34
+* 更新 `rusqlite` 到 ~0.34
 
 ## [0.3.6] - 2025-1-25
 
 ### Changed
 
-* 更新 cppjieba 到 v5.4.0
+* 更新 `cppjieba` 到 [v5.4.0](https://github.com/yanyiwu/cppjieba/commit/9b45e084a3153b9a60ead6c8fecc97345c17da15)
 
 ## [0.3.5] - 2025-1-20
 
 ### Changed
 
-* 更新 rusqlite 到 ~0.33
+* 更新 `rusqlite` 到 ~0.33
 
 ## [0.3.4] - 2024-10-7
 
@@ -54,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* 更新依赖
+* 更新 `rusqlite` 到 ~0.32
 * 修改 `sqlite3_simple_init` 方法签名
 
 ## [0.3.0] - 2024-5-20
@@ -92,4 +92,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* 支持 `simple v0.4.0`
+* 支持 `simple` [v0.4.0](https://github.com/wangfenjin/simple/releases/tag/v0.4.0)

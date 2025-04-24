@@ -82,7 +82,7 @@ This is the compatible version map between `libsimple` and `rusqlite`:
 
 # Generate CMRC
 
-This is only required when the `pinyin.txt` updated.
+This is only required when the `simple/contrib/pinyin.txt` updated.
 Normal user can ignore this.
 
 ```bash
