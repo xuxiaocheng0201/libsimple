@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-5-27
+
+### Changed
+
+* 更新 `rusqlite` 到 `>=0.32,<1.0`
+* 更新 `cppjieba` 到 [v5.6.0](https://github.com/yanyiwu/cppjieba/commit/294755fab1ea0c2544442b27cb7d2ad9bcc4ba01)
+
 ## [0.5.0] - 2025-4-24
 
 ### Changed
