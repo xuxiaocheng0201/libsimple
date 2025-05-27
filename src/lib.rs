@@ -1,5 +1,5 @@
 #![doc = include_str!("../README.md")]
-#![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![warn(missing_docs)]
 
 #[cfg(feature = "jieba")]
@@ -29,7 +29,6 @@ pub fn disable_auto_extension() -> rusqlite::Result<()> {
 ///
 /// Then you may call [`set_dict`] for each connection.
 #[cfg(feature = "jieba")]
-#[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
 pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
     let directory = directory.as_ref().to_path_buf();
     if !directory.is_dir() { std::fs::create_dir_all(&directory)?; }
@@ -55,7 +54,6 @@ pub fn release_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
 ///
 /// You should call [`release_dict`] first.
 #[cfg(feature = "jieba")]
-#[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
 pub fn set_dict(connection: &rusqlite::Connection, directory: impl AsRef<Path>) -> rusqlite::Result<()> {
     let directory = directory.as_ref();
     let directory = directory.to_str()

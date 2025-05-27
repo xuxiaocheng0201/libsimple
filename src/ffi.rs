@@ -13,12 +13,10 @@ unsafe extern "C" {
     pub fn simple_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 
     #[cfg(feature = "jieba")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
     /// The sqlite function entrypoint for `jieba_dict` function.
     pub fn jieba_dict(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 
     #[cfg(feature = "jieba")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "jieba")))]
     /// The sqlite function entrypoint for `jieba_query` function.
     pub fn jieba_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 
