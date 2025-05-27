@@ -39,10 +39,18 @@ pub fn check_err(res: c_int) -> Result<()> {
     if res == ffi::SQLITE_OK {
         return Ok(());
     }
+    Err(get_err(res))
+}
+
+#[cold]
+fn get_err(res: c_int) -> Error {
     let err = unsafe { ffi::sqlite3_errstr(res) };
     if err.is_null() {
-        return Err(Error::SqliteFailure(ffi::Error::new(res), None));
+        return Error::SqliteFailure(ffi::Error::new(res), None);
     }
-    let msg = unsafe { CStr::from_ptr(err) }.to_str()?;
-    Err(Error::SqliteFailure(ffi::Error::new(res), Some(msg.to_string())))
+    let msg = unsafe { CStr::from_ptr(err) }.to_str();
+    match msg {
+        Ok(msg) => Error::SqliteFailure(ffi::Error::new(res), Some(msg.to_string())),
+        Err(err) => Error::Utf8Error(err),
+    }
 }
