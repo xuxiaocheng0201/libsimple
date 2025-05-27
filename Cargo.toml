@@ -40,13 +40,13 @@ jieba = []
 cc = { version = "^1.2", features = ["parallel"] }
 
 [dependencies]
-rusqlite = "~0.35"
+rusqlite = "~0.36"
 better_embedded = "~0.4"
 
 [dev-dependencies]
 anyhow = "^1.0"
-rusqlite = { version = "~0.35", features = ["bundled-sqlcipher"] }
-tempfile = "^3.19"
+rusqlite = { version = "~0.36", features = ["bundled-sqlcipher"] }
+tempfile = "^3.20"
 
 [package.metadata.docs.rs]
 all-features = true
