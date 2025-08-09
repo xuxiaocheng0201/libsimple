@@ -22,7 +22,6 @@ fn main() {
     cfg.flag_if_supported("-Wno-comment");
     cfg.flag_if_supported("-Wno-unused-parameter");
     cfg.flag_if_supported("-Wno-deprecated-declarations");
-    cfg.flag_if_supported("-Wno-unused-but-set-variable");
 
     cfg.cpp(true);
     cfg.std("c++14");
