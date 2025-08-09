@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2025-8-10
+
+### Changed
+
+* 更新 `simple` 补丁 [b88f87035795cfdda71ba8629967973ed00e404c](https://github.com/wangfenjin/simple/tree/b88f87035795cfdda71ba8629967973ed00e404c)
+* 关闭 `better_embedded` 默认功能
+
 ## [0.6.0] - 2025-5-27
 
 ### Changed
