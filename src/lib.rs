@@ -75,7 +75,7 @@ mod tests {
             PRAGMA key = '123456';
             CREATE TABLE singer (id INTEGER, name TEXT);
             CREATE VIRTUAL TABLE d USING fts5(id, name, tokenize = 'simple');
-            CREATE TRIGGER dtrigger AFTER INSERT ON singer BEGIN
+            CREATE TRIGGER trigger AFTER INSERT ON singer BEGIN
                 INSERT INTO d(id, name) VALUES (new.id, new.name);
             END;
             INSERT INTO singer (id, name) VALUES (1, '中华人民共和国国歌');

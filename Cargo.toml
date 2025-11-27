@@ -54,3 +54,4 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [[example]]
 name = "hello"
+test = true
