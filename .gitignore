@@ -2,6 +2,7 @@
 
 ### Cargo ###
 !/.gitignore
+!/.gitattributes
 !/Cargo.lock
 !/Cargo.toml
 
