@@ -5,10 +5,10 @@ use rusqlite::Connection;
 fn main() -> Result<()> {
     libsimple::enable_auto_extension()?;
     let dir = tempdir()?;
-    libsimple::release_dict(&dir)?;
+    libsimple::release_jieba_dict(&dir)?;
     
     let conn = Connection::open_in_memory()?;
-    libsimple::set_dict(&conn, &dir)?;
+    libsimple::set_jieba_dict(&conn, &dir)?;
 
     conn.execute_batch("
         CREATE VIRTUAL TABLE d USING fts5(id, text, tokenize = 'simple');

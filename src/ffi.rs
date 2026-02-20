@@ -12,6 +12,9 @@ unsafe extern "C" {
     /// The sqlite function entrypoint for `simple_query` function.
     pub fn simple_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
 
+    /// The sqlite function entrypoint for `pinyin_dict` function.
+    pub fn pinyin_dict(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
+
     #[cfg(feature = "jieba")]
     /// The sqlite function entrypoint for `jieba_dict` function.
     pub fn jieba_dict(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
@@ -19,7 +22,6 @@ unsafe extern "C" {
     #[cfg(feature = "jieba")]
     /// The sqlite function entrypoint for `jieba_query` function.
     pub fn jieba_query(ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);
-
 
     /// The sqlite fts5 function entrypoint for `simple_highlight` function.
     pub fn simple_highlight(api: *const ffi::Fts5ExtensionApi, fts: *mut ffi::Fts5Context, ctx: *mut ffi::sqlite3_context, argc: c_int, argv: *mut *mut ffi::sqlite3_value);

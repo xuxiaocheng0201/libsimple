@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+* 添加 `set_pinyin_dict` 允许自定义 `pinyin.txt`
+
+### Changed
+
+* 更新 `simple` 到 [v0.7.0](https://github.com/wangfenjin/simple/commit/683a0afa7a20dddd4857688a4468834c21a15798)
+* 重命名 `release_dict` 为 `release_jieba_dict`
+* 重命名 `set_dict` 为 `set_jieba_dict`
+
 ## [0.6.1] - 2025-8-10
 
 ### Changed
