@@ -24,7 +24,9 @@ pub fn disable_auto_extension() -> rusqlite::Result<()> {
 }
 
 /// Use custom `pinyin.txt`.
-/// Only need to call once for each progress.
+/// Only need to call once for each process.
+///
+/// Call `set_pinyin_dict(&conn, "")` to use embedded `pinyin.txt`.
 /// # Notice
 /// It is recommended to call pinyin_dict() once before building the index and querying.
 /// If the pinyin mapping is replaced, the existing index will not be automatically rebuilt,
@@ -102,6 +104,12 @@ mod tests {
         assert_eq!(1, conn.query_row(
            "SELECT COUNT(*) FROM d WHERE x match simple_query('zhou lun')",
            [], |row| row.get::<_, i64>(0)
+        )?);
+        crate::set_pinyin_dict(&conn, "")?; // Use embedded pinyin.txt
+        conn.execute_batch("INSERT INTO d(d) VALUES('rebuild');")?;
+        assert_eq!(1, conn.query_row(
+            "SELECT COUNT(*) FROM d WHERE x match simple_query('jie')",
+            [], |row| row.get::<_, i64>(0)
         )?);
         Ok(())
     }
