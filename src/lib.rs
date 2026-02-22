@@ -2,25 +2,19 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![warn(missing_docs)]
 
-#[cfg(feature = "jieba")]
-use std::path::Path;
-
-use rusqlite::ffi::{sqlite3_auto_extension, sqlite3_cancel_auto_extension};
-
-use crate::ffi::sqlite3_simple_init;
-
 pub mod ffi;
 
 /// Enable sqlite3_simple_init() as an auto extension.
+#[inline]
 pub fn enable_auto_extension() -> rusqlite::Result<()> {
-    let res = unsafe { sqlite3_auto_extension(Some(sqlite3_simple_init)) };
-    ffi::check_err(res)
+    unsafe { rusqlite::auto_extension::register_auto_extension(ffi::sqlite3_simple_init) }
 }
 
 /// Disable sqlite3_simple_init() as an auto extension.
+#[inline]
 pub fn disable_auto_extension() -> rusqlite::Result<()> {
-    let res = unsafe { sqlite3_cancel_auto_extension(Some(sqlite3_simple_init)) };
-    ffi::check_err(res)
+    rusqlite::auto_extension::cancel_auto_extension(ffi::sqlite3_simple_init);
+    Ok(())
 }
 
 /// Use custom `pinyin.txt`.
@@ -31,7 +25,7 @@ pub fn disable_auto_extension() -> rusqlite::Result<()> {
 /// It is recommended to call pinyin_dict() once before building the index and querying.
 /// If the pinyin mapping is replaced, the existing index will not be automatically rebuilt,
 /// and manual index reconstruction is required.
-pub fn set_pinyin_dict(connection: &rusqlite::Connection, file: impl AsRef<Path>) -> rusqlite::Result<()> {
+pub fn set_pinyin_dict(connection: &rusqlite::Connection, file: impl AsRef<std::path::Path>) -> rusqlite::Result<()> {
     let file = file.as_ref();
     let file = file.to_str().ok_or_else(|| rusqlite::Error::InvalidPath(file.to_path_buf()))?;
     connection.query_row("SELECT pinyin_dict(?)", rusqlite::params![file], |_| Ok(()))
@@ -42,7 +36,7 @@ pub fn set_pinyin_dict(connection: &rusqlite::Connection, file: impl AsRef<Path>
 ///
 /// Then you may call [`set_jieba_dict`] for each connection.
 #[cfg(feature = "jieba")]
-pub fn release_jieba_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
+pub fn release_jieba_dict(directory: impl AsRef<std::path::Path>) -> std::io::Result<()> {
     let directory = directory.as_ref().to_path_buf();
     if !directory.is_dir() { std::fs::create_dir_all(&directory)?; }
 
@@ -70,7 +64,7 @@ pub fn release_jieba_dict(directory: impl AsRef<Path>) -> std::io::Result<()> {
 ///
 /// You should call [`release_jieba_dict`] first.
 #[cfg(feature = "jieba")]
-pub fn set_jieba_dict(connection: &rusqlite::Connection, directory: impl AsRef<Path>) -> rusqlite::Result<()> {
+pub fn set_jieba_dict(connection: &rusqlite::Connection, directory: impl AsRef<std::path::Path>) -> rusqlite::Result<()> {
     let directory = directory.as_ref();
     let directory = directory.to_str().ok_or_else(|| rusqlite::Error::InvalidPath(directory.to_path_buf()))?;
     connection.query_row("SELECT jieba_dict(?)", rusqlite::params![directory], |_| Ok(()))
