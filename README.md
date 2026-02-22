@@ -65,6 +65,7 @@ This is the compatible version map between `libsimple` and `rusqlite`:
 
 | `libsimple` version | `rusqlite` version |
 |---------------------|--------------------|
+| =0.7.1              | >=0.32,<1.0        |
 | =0.7.0              | >=0.32,<1.0        |
 | =0.6.1              | >=0.32,<1.0        |
 | =0.6.0              | >=0.32,<1.0        |
