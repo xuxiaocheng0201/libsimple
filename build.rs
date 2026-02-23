@@ -10,6 +10,10 @@ fn generate_cmrc() -> std::path::PathBuf {
     cfg.define("SIMPLE_WITH_JIEBA", "off");
     cfg.define("BUILD_TEST_EXAMPLE", "off");
 
+    if cfg!(windows) {
+        cfg.generator("Unix Makefiles");
+    }
+
     let mut path = cfg.build();
     path.push("build");
     path
