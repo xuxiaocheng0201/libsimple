@@ -19,17 +19,17 @@ include = [
     "/build.rs",
     "/examples",
 
-    "/cmrc",
     "/cppjieba/include",
     "/cppjieba/dict",
     "!/cppjieba/dict/pos_dict",
     "/cppjieba/deps/limonp/include",
     "/simple/src",
     "/simple/contrib/sqlite3",
+    "/simple/contrib/pinyin.txt",
 
     "**/LICENSE",
-    "!**/*.cmake",
-    "!**/CMakeLists.txt"
+    "**/CMakeLists.txt",
+    "**/*.cmake",
 ]
 
 [features]
@@ -37,6 +37,7 @@ default = ["jieba"]
 jieba = []
 
 [build-dependencies]
+cmake = "~0.1"
 cc = { version = "^1", features = ["parallel"] }
 
 [dependencies]
