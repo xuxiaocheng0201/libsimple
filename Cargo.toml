@@ -56,3 +56,8 @@ rustdoc-args = ["--cfg", "docsrs"]
 [[example]]
 name = "hello"
 test = true
+
+[[test]]
+name = "custom_pinyin"
+[[test]]
+name = "simple_example"

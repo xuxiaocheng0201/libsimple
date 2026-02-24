@@ -10,6 +10,7 @@
 !/src
 !/build.rs
 !/examples
+!/tests
 
 ## modules ##
 !/.gitmodules
