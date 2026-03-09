@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-3-10
+
+### Changed
+
 * 更新 `simple` 到 [v0.7.1](https://github.com/wangfenjin/simple/commit/4ed008934495fc55ff4bf6620bba58311988b23e)
+* 更新 `cppjieba` 到 [v5.6.2](https://github.com/yanyiwu/cppjieba/commit/1a968ac58937ad6dc19813a1adb99516c1646d0b)
+* 在编译时生成 cmrc
 
 ## [0.7.1] - 2026-2-22
 
