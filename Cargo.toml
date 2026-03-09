@@ -37,7 +37,6 @@ default = ["jieba"]
 jieba = []
 
 [build-dependencies]
-cmake = "~0.1"
 cc = { version = "^1", features = ["parallel"] }
 
 [dependencies]
