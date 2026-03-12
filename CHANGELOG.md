@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-3-13
+
+### Changed
+
+* 拆分了 `sqlite3_simple_init` 中的 `fts5 tokenizer` 部分到 `sqlite3_simpletokenizer_init`
+
+### Fixed
+
+* 确保 ffi 相关函数均能被正常链接
+
 ## [0.8.0] - 2026-3-10
 
 ### Changed

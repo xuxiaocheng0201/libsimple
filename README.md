@@ -18,7 +18,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-libsimple = "~0.8"
+libsimple = "~0.9"
 ```
 
 
@@ -54,6 +54,45 @@ fn main() -> Result<()> {
 ```
 
 
+# Patches
+
+Note that since version 0.9.0, `sqlite3_simple_init` has been split into `sqlite3_simple_init` and `sqlite3_simpletokenizer_init`.
+
+This is a fix for users who use SqlCipher.
+If the fts5 tokenizer is loaded by `sqlite3_auto_extension`,
+users will not have the opportunity to set the key,
+resulting in `automatic extension loading failed: file is not a database`.
+
+After applying this:
+```rust
+# fn main() -> rusqlite::Result<()> {
+unsafe fn enable_extension(connection: &rusqlite::Connection, func: rusqlite::auto_extension::RawAutoExtension) -> rusqlite::Result<()> {
+    let mut err = std::ptr::null_mut();
+    let res = unsafe { func(connection.handle(), &mut err, std::ptr::null()) };
+    if res != rusqlite::ffi::SQLITE_OK {
+        Err(if err.is_null() {
+            rusqlite::Error::SqliteFailure(rusqlite::ffi::Error::new(res), None)
+        } else {
+            let c_str = unsafe { std::ffi::CStr::from_ptr(err) };
+            let s = c_str.to_string_lossy().into_owned();
+            unsafe { rusqlite::ffi::sqlite3_free(err as _) };
+            rusqlite::Error::SqliteFailure(rusqlite::ffi::Error::new(res), Some(s))
+        })
+    } else {
+        Ok(())
+    }
+}
+unsafe { rusqlite::auto_extension::register_auto_extension(libsimple::ffi::sqlite3_simple_init) }?;
+let connection = rusqlite::Connection::open_in_memory()?;
+connection.pragma_update(None, "key", "123123123")?;
+connection.pragma_update(None, "journal_mode", "WAL")?;
+unsafe { enable_extension(&connection, libsimple::ffi::sqlite3_simpletokenizer_init) }?;
+// use simple normally
+# Ok(())
+# }
+```
+
+
 # License
 
 Licensed under MIT license ([LICENSE](LICENSE) or <http://opensource.org/licenses/MIT>)
@@ -65,6 +104,7 @@ This is the compatible version map between `libsimple` and `rusqlite`:
 
 | `libsimple` version | `rusqlite` version |
 |---------------------|--------------------|
+| =0.9.0              | >=0.32,<1.0        |
 | =0.8.0              | >=0.32,<1.0        |
 | =0.7.1              | >=0.32,<1.0        |
 | =0.7.0              | >=0.32,<1.0        |
