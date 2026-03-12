@@ -19,7 +19,7 @@ include = [
     "/build.rs",
     "/examples",
     "/tests",
-    "/patch/*.patch",
+    "/patches",
 
     "/cppjieba/include",
     "/cppjieba/dict",
@@ -39,6 +39,7 @@ default = ["jieba"]
 jieba = []
 
 [build-dependencies]
+dircpy = "~0.3"
 cc = { version = "^1", features = ["parallel"] }
 
 [dependencies]

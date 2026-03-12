@@ -1,5 +1,13 @@
 fn main() {
+    let out_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    dircpy::CopyBuilder::new("simple", out_dir.join("simple"))
+        .overwrite(true)
+        .run().expect("failed to copy source simple");
+    dircpy::CopyBuilder::new("cppjieba", out_dir.join("cppjieba"))
+        .overwrite(true)
+        .run().expect("failed to copy source cppjieba");
     apply_patch();
+
     let cmrc_dir = generate_cmrc();
     compile_simple(cmrc_dir);
 }
@@ -22,32 +30,23 @@ fn run(cmd: &mut std::process::Command, program: &str) {
 }
 
 fn apply_patch() {
-    // https://github.com/wangfenjin/simple/pull/203
-    if !std::path::Path::new("patches/simple-203.patch.patched").exists() {
-        println!("cargo:rerun-if-changed=patches/simple-203.patch");
-        run(
-            std::process::Command::new(std::env::var("PATCH").unwrap_or("patch".to_string()))
-                .arg("-p1")
-                .arg("-d").arg("simple")
-                .arg("-i").arg("../patches/simple-203.patch")
-                .arg("--no-backup-if-mismatch"),
-            "patch",
-        );
-        std::fs::write("patches/simple-203.patch.patched", "").unwrap();
-    }
-    // https://github.com/wangfenjin/simple/pull/203#issuecomment-4047703248
-    if !std::path::Path::new("patches/simple-203-2.patch.patched").exists() {
-        println!("cargo:rerun-if-changed=patches/simple-203-2.patch");
-        run(
-            std::process::Command::new(std::env::var("PATCH").unwrap_or("patch".to_string()))
-                .arg("-p1")
-                .arg("-d").arg("simple")
-                .arg("-i").arg("../patches/simple-203-2.patch")
-                .arg("--no-backup-if-mismatch"),
-            "patch",
-        );
-        std::fs::write("patches/simple-203-2.patch.patched", "").unwrap();
-    }
+    let out_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    println!("cargo:rerun-if-changed=patches/simple-203.patch");
+    run(
+        std::process::Command::new(std::env::var("PATCH").unwrap_or("patch".to_string()))
+            .arg("-p1").arg("--no-backup-if-mismatch")
+            .arg("-d").arg(out_dir.join("simple"))
+            .stdin(std::fs::File::open("patches/simple-203.patch").unwrap()),
+        "patch",
+    );
+    println!("cargo:rerun-if-changed=patches/simple-203-2.patch");
+    run(
+        std::process::Command::new(std::env::var("PATCH").unwrap_or("patch".to_string()))
+            .arg("-p1").arg("--no-backup-if-mismatch")
+            .arg("-d").arg(out_dir.join("simple"))
+            .stdin(std::fs::File::open("patches/simple-203-2.patch").unwrap()),
+        "patch",
+    );
 }
 
 fn generate_cmrc() -> std::path::PathBuf {
@@ -59,14 +58,12 @@ fn generate_cmrc() -> std::path::PathBuf {
     // cfg.generator("Unix Makefiles");
     // cfg.build();
 
-    let mut out_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
-    out_dir.push("build");
-    let out_dir = out_dir;
+    let out_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
 
     run(
         std::process::Command::new(std::env::var("CMAKE").unwrap_or("cmake".to_string()))
-            .arg("simple")
-            .arg("-B").arg(&out_dir)
+            .arg(out_dir.join("simple"))
+            .arg("-B").arg(out_dir.join("build"))
             .arg("-DBUILD_SQLITE3=off")
             .arg("-DSIMPLE_WITH_JIEBA=off")
             .arg("-DBUILD_TEST_EXAMPLE=off")
@@ -75,23 +72,25 @@ fn generate_cmrc() -> std::path::PathBuf {
     );
     run(
         std::process::Command::new(std::env::var("MAKE").unwrap_or("make".to_string()))
-            .current_dir(&out_dir),
+            .current_dir(out_dir.join("build")),
         "make",
     );
 
-    out_dir
+    out_dir.join("build")
 }
 
 fn compile_simple(cmrc_dir: std::path::PathBuf) {
+    let out_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
+
     let mut cfg = cc::Build::new();
 
-    cfg.include("simple/src");
-    cfg.file("simple/src/entry.cc");
-    cfg.file("simple/src/pinyin.cc");
-    cfg.file("simple/src/simple_highlight.cc");
-    cfg.file("simple/src/simple_tokenizer.cc");
+    cfg.include(out_dir.join("simple/src"));
+    cfg.file(out_dir.join("simple/src/entry.cc"));
+    cfg.file(out_dir.join("simple/src/pinyin.cc"));
+    cfg.file(out_dir.join("simple/src/simple_highlight.cc"));
+    cfg.file(out_dir.join("simple/src/simple_tokenizer.cc"));
 
-    cfg.include("simple/contrib/sqlite3");
+    cfg.include(out_dir.join("simple/contrib/sqlite3"));
 
     cfg.include(cmrc_dir.join("_cmrc/include"));
     cfg.file(cmrc_dir.join("__cmrc_PINYIN_TEXT/lib.cpp"));
@@ -99,8 +98,8 @@ fn compile_simple(cmrc_dir: std::path::PathBuf) {
 
     if cfg!(feature = "jieba") {
         cfg.define("USE_JIEBA", "1");
-        cfg.include("cppjieba/include");
-        cfg.include("cppjieba/deps/limonp/include");
+        cfg.include(out_dir.join("cppjieba/include"));
+        cfg.include(out_dir.join("cppjieba/deps/limonp/include"));
     }
 
     cfg.flag_if_supported("-Wno-comment");
