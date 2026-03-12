@@ -1,0 +1,32 @@
+Index: src/simple_tokenizer.h
+<+>UTF-8
+===================================================================
+diff --git a/src/simple_tokenizer.h b/src/simple_tokenizer.h
+--- a/src/simple_tokenizer.h
++++ b/src/simple_tokenizer.h
+@@ -50,5 +50,6 @@
+ extern "C" void fts5_simple_xDelete(Fts5Tokenizer *tokenizer_ptr);
+
+ extern "C" int sqlite3_simple_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_routines *pApi);
++extern "C" int sqlite3_simpletokenizer_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_routines *pApi);
+
+ #endif  // SIMPLE_TOKENIZER_H_
+Index: src/entry.cc
+<+>UTF-8
+===================================================================
+diff --git a/src/entry.cc b/src/entry.cc
+--- a/src/entry.cc
++++ b/src/entry.cc
+@@ -129,6 +129,12 @@
+   rc = sqlite3_create_function(db, "jieba_dict", 1, SQLITE_UTF8 | SQLITE_DETERMINISTIC, NULL, &jieba_dict, NULL, NULL);
+ #endif
+
++  return rc;
++}
++
++int sqlite3_simpletokenizer_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_routines *pApi) {
++  int rc = SQLITE_OK;
++
+   // fts5_tokenizer tokenizer = {fts5AsciiCreate, fts5AsciiDelete, fts5AsciiTokenize };
+   fts5_tokenizer tokenizer = {fts5_simple_xCreate, fts5_simple_xDelete, fts5_simple_xTokenize};
+   fts5_api *fts5api;

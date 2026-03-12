@@ -7,13 +7,16 @@ pub mod ffi;
 /// Enable sqlite3_simple_init() as an auto extension.
 #[inline]
 pub fn enable_auto_extension() -> rusqlite::Result<()> {
-    unsafe { rusqlite::auto_extension::register_auto_extension(ffi::sqlite3_simple_init) }
+    unsafe { rusqlite::auto_extension::register_auto_extension(ffi::sqlite3_simple_init) }?;
+    unsafe { rusqlite::auto_extension::register_auto_extension(ffi::sqlite3_simpletokenizer_init) }?;
+    Ok(())
 }
 
 /// Disable sqlite3_simple_init() as an auto extension.
 #[inline]
 pub fn disable_auto_extension() -> rusqlite::Result<()> {
     rusqlite::auto_extension::cancel_auto_extension(ffi::sqlite3_simple_init);
+    rusqlite::auto_extension::cancel_auto_extension(ffi::sqlite3_simpletokenizer_init);
     Ok(())
 }
 

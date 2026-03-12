@@ -6,7 +6,20 @@ use rusqlite::ffi;
 
 unsafe extern "C" {
     /// The entrypoint for the [simple](https://github.com/wangfenjin/simple) extension.
+    ///
+    /// See also [sqlite3_simpletokenizer_init].
     pub fn sqlite3_simple_init(
+        db: *mut ffi::sqlite3,
+        pz_err_msg: *mut *mut c_char,
+        p_api: *const ffi::sqlite3_api_routines,
+    ) -> c_int;
+
+    /// The entrypoint for the [simple](https://github.com/wangfenjin/simple) extension.
+    ///
+    /// See also [sqlite3_simple_init].
+    /// This function has been split to fix issues encountered in SqlCipher.
+    // https://github.com/rusqlite/rusqlite/discussions/1813
+    pub fn sqlite3_simpletokenizer_init(
         db: *mut ffi::sqlite3,
         pz_err_msg: *mut *mut c_char,
         p_api: *const ffi::sqlite3_api_routines,

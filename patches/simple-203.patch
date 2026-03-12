@@ -1,0 +1,69 @@
+From eb0a263335f85d94d93a6f093267f72d35408219 Mon Sep 17 00:00:00 2001
+From: XuXiaoCheng <2762267080@qq.com>
+Date: Thu, 12 Mar 2026 03:07:50 +0800
+Subject: [PATCH] export simple_query, pinyin_dict, jieba_dict and jieba_query
+
+---
+ src/entry.cc           | 8 ++++----
+ src/simple_tokenizer.h | 7 +++++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/src/entry.cc b/src/entry.cc
+index c365eab..2d89820 100644
+--- a/src/entry.cc
++++ b/src/entry.cc
+@@ -44,7 +44,7 @@ static int fts5_api_from_db(sqlite3 *db, fts5_api **ppApi) {
+ }
+
+ #ifdef USE_JIEBA
+-static void jieba_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
++void jieba_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
+   if (nVal >= 1) {
+     const char *text = (const char *)sqlite3_value_text(apVal[0]);
+     if (text) {
+@@ -64,7 +64,7 @@ static void jieba_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
+   sqlite3_result_null(pCtx);
+ }
+
+-static void jieba_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
++void jieba_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
+   if (nVal >= 1) {
+     const char *text = (const char *)sqlite3_value_text(apVal[0]);
+     if (text) {
+@@ -81,7 +81,7 @@ static void jieba_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal)
+ }
+ #endif
+
+-static void simple_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
++void simple_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
+   if (nVal >= 1) {
+     const char *text = (const char *)sqlite3_value_text(apVal[0]);
+     if (text) {
+@@ -97,7 +97,7 @@ static void simple_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal)
+   sqlite3_result_null(pCtx);
+ }
+
+-static void pinyin_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
++void pinyin_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal) {
+   if (nVal >= 1) {
+     const char *text = (const char *)sqlite3_value_text(apVal[0]);
+     if (text) {
+diff --git a/src/simple_tokenizer.h b/src/simple_tokenizer.h
+index 9c99422..2ab98f7 100644
+--- a/src/simple_tokenizer.h
++++ b/src/simple_tokenizer.h
+@@ -44,6 +44,13 @@ class SimpleTokenizer {
+
+ }  // namespace simple_tokenizer
+
++extern "C" void simple_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal);
++extern "C" void pinyin_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal);
++#ifdef USE_JIEBA
++extern "C" void jieba_dict(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal);
++extern "C" void jieba_query(sqlite3_context *pCtx, int nVal, sqlite3_value **apVal);
++#endif
++
+ extern "C" int fts5_simple_xCreate(void *sqlite3, const char **azArg, int nArg, Fts5Tokenizer **ppOut);
+ extern "C" int fts5_simple_xTokenize(Fts5Tokenizer *tokenizer_ptr, void *pCtx, int flags, const char *pText, int nText,
+                                      xTokenFn xToken);
+

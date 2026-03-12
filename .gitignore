@@ -9,6 +9,7 @@
 ### Project ###
 !/src
 !/build.rs
+!/patches/*.patch
 !/examples
 !/tests
 
