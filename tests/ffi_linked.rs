@@ -1,5 +1,5 @@
 #[test]
-#[ignore] // These function should not be executed. Just compile.
+#[ignore] // This function should not be executed. Just compile.
 fn test() {
     use std::ptr::{null, null_mut};
     unsafe {

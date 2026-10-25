@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-25
+
+### Changed
+
+* 更新 `simple` 到 最新提交 [45db071ba8043ffe8a2e5dfe41f9d68fb477576c](https://github.com/wangfenjin/simple/commit/45db071ba8043ffe8a2e5dfe41f9d68fb477576c)
+* 更新 `cppjieba` 到 最新提交 [b9c787eb7750a8449400e7d7f59cf86237c23154](https://github.com/yanyiwu/cppjieba/commit/b9c787eb7750a8449400e7d7f59cf86237c23154)
+* 提升 `MSRV` 到 `1.89.0`
+* 更新 `rusqlite` 到 `>=0.32,<=0.41`
+
 ## [0.9.0] - 2026-3-13
 
 ### Changed

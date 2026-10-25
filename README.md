@@ -18,7 +18,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-libsimple = "~0.9"
+libsimple = "~0.10"
 ```
 
 
@@ -104,6 +104,7 @@ This is the compatible version map between `libsimple` and `rusqlite`:
 
 | `libsimple` version | `rusqlite` version |
 |---------------------|--------------------|
+| =0.10.0             | >=0.32,<=0.41      |
 | =0.9.0              | >=0.32,<1.0        |
 | =0.8.0              | >=0.32,<1.0        |
 | =0.7.1              | >=0.32,<1.0        |
