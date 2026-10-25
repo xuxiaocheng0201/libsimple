@@ -3,7 +3,7 @@ name = "libsimple"
 version = "0.9.0"
 authors = ["xuxiaocheng <2762267080@qq.com>"]
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.89.0"
 description = "Rust bindings to simple, a SQLite3 fts5 tokenizer which supports Chinese and PinYin."
 readme = "README.md"
 license = "MIT"
@@ -43,12 +43,12 @@ dircpy = "~0.3"
 cc = { version = "^1", features = ["parallel"] }
 
 [dependencies]
-rusqlite = ">=0.32,<1.0"
+rusqlite = ">=0.32,<=0.41"
 better_embedded = { version = "~0.4", default-features = false }
 
 [dev-dependencies]
 anyhow = "^1"
-rusqlite = { version = ">=0.32,<1.0", features = ["bundled"] }
+rusqlite = { version = ">=0.32,<=0.41", features = ["bundled"] }
 tempfile = "^3"
 
 [package.metadata.docs.rs]
