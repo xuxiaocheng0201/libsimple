@@ -47,7 +47,7 @@ better_embedded = { version = "~0.4", default-features = false }
 
 [dev-dependencies]
 anyhow = "^1"
-rusqlite = { version = ">=0.32,<=0.42", features = ["bundled-sqlcipher"] }
+rusqlite = { version = ">=0.32,<=0.42", features = ["bundled-sqlcipher-vendored-openssl"] }
 tempfile = "^3"
 
 [package.metadata.docs.rs]
