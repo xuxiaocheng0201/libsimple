@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.2] - 2026-11-15
+
+* 更新 `rusqlite` 到 `>=0.32,<=0.43`
+
 ## [0.10.1] - 2026-11-12
 
 * 更新 `rusqlite` 到 `>=0.32,<=0.42`
